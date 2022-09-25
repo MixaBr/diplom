@@ -26,8 +26,9 @@ class PlayingField:
         self.sum_pl_2 = 0
         self.game_run = True
         self.cross_count = 0
-        row = random.randint(0, self.row_g)
-        col = random.randint(0, self.row_g)
+        row = random.randint(0, self.row_g-1)
+        col = random.randint(0, self.row_g-1)
+        self.player = random.randint(0, 1)
 
         if self.turn == 1:
             self.row_2()
@@ -81,13 +82,13 @@ class PlayingField:
             print("Конец игре")
 
     def row_1(self, col):
-        for row_v in range(self.row_g):
-            self.field[row_v][col]['background'] = 'red'
+        for ik in range(self.row_g):
+            self.field[ik][col]['background'] = 'red'
 
     def row_2(self):
-        for row_v in range(self.row_g):
-            for col_v in range(self.row_g):
-                self.field[row_v][col_v]['background'] = 'lavender'
+        for ik in range(self.row_g):
+            for ki in range(self.row_g):
+                self.field[ik][ki]['background'] = 'lavender'
 
     def col_1(self, row):
         for col_v in range(self.row_g):
@@ -99,17 +100,16 @@ class PlayingField:
 
 
 # определение игрового поля
-size = 5
+size = 6
 
 pole = PlayingField([], size, True, 0, 0, 0, random.randint(0, 1), random.randint(0, 1))
 
 for i in range(size):
     line = []
     for k in range(size):
-        button = Button(root, text=' ', width=4, height=2,
-                        font=('Verdana', 20, 'bold'),
+        button = Button(root, text=' ', width=4, height=2, font=('Verdana', 20, 'bold'),
                         background='lavender',
-                        command=lambda: pole.click(i, k))
+                        command=lambda i=i, k=k: pole.click(i, k))
         button.grid(row=i, column=k, sticky='nsew')
         line.append(button)
     pole.field.append(line)
